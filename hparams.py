@@ -1,11 +1,15 @@
 import tensorflow as tf
 from text import symbols
 
+class FakeHParams:
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
 def create_hparams(hparams_string=None, verbose=False):
     """Create model hyperparameters. Parse nondefault from given string."""
 
-    hparams = tf.contrib.training.HParams(
+    hparams = FakeHParams(
         ################################
         # Experiment Parameters        #
         ################################
@@ -95,11 +99,11 @@ def create_hparams(hparams_string=None, verbose=False):
         global_mean_npy='global_mean.npy'
     )
 
-    if hparams_string:
-        tf.compat.v1.logging.info('Parsing command line hparams: %s', hparams_string)
-        hparams.parse(hparams_string)
+    # if hparams_string:
+    #     tf.compat.v1.logging.info('Parsing command line hparams: %s', hparams_string)
+    #     hparams.parse(hparams_string)
 
-    if verbose:
-        tf.compat.v1.logging.info('Final parsed hparams: %s', hparams.values())
+    # if verbose:
+    #     tf.compat.v1.logging.info('Final parsed hparams: %s', hparams.values())
 
     return hparams
